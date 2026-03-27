@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+# 1. THE DATASET (A sample of 10 students for training)
+# Features: [Study Hours per Day, Attendance %, Previous Assignment Score]
+data = {
+    'study_hours': [1, 8, 2, 7, 3, 6, 2, 9, 4, 5],
+    'attendance': [50, 95, 60, 90, 65, 85, 55, 98, 75, 80],
+    'prev_score': [40, 90, 45, 85, 50, 80, 42, 95, 65, 70],
+    'passed': [0, 1, 0, 1, 0, 1, 0, 1, 1, 1]  # 1 = Pass, 0 = Fail
+}
+
+df = pd.DataFrame(data)
+X = df[['study_hours', 'attendance', 'prev_score']]
+y = df['passed']
+
+# 2. FEATURE SCALING (Standardizes data for the AI model)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 3. TRAIN THE MODEL (Logistic Regression for Success/Failure)
+model = LogisticRegression()
+model.fit(X_scaled, y)
+
+# 4. USER INTERFACE (Inputting your own data)
+print("--- VIT Student Success Predictor ---")
+hr = float(input("Enter your daily study hours: "))
+att = float(input("Enter your attendance percentage: "))
+prev = float(input("Enter your previous assignment score: "))
+
+# Scale user input and predict
+user_data = scaler.transform([[hr, att, prev]])
+probability = model.predict_proba(user_data)[0][1] * 100 # Likelihood of '1' (Pass)
+prediction = model.predict(user_data)
+
+# 5. DISPLAY RESULT
+print(f"\nYour predicted Success Rate: {probability:.2f}%")
+if prediction[0] == 1:
+    print("AI Prediction: You are on track to PASS!")
+else:
+    print("AI Prediction: Caution! You may need to increase your efforts.")
