@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 # Features: [Study Hours per Day, Attendance %, Previous Assignment Score]
 data = {
     'study_hours': [1, 8, 2, 7, 3, 6, 2, 9, 4, 5],
-    'attendance': [50, 95, 60, 90, 65, 85, 55, 98, 75, 80,78],
+    'attendance': [50, 95, 60, 90, 65, 85, 55, 98, 75, 80],
     'prev_score': [40, 90, 45, 85, 50, 80, 42, 95, 65, 70],
     'passed': [0, 1, 0, 1, 0, 1, 0, 1, 1, 1]  # 1 = Pass, 0 = Fail
 }
